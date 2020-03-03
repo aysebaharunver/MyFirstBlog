@@ -1,0 +1,60 @@
+﻿@model List<MyFirstBlog.Models.Entities.Article>
+@{
+    ViewBag.Title = "Articles";
+}
+
+
+<div class="row">
+    <h2>Makaleler</h2>
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <a href="@Url.Action("AddOrUpdateArticle","Admin")" class="btn btn-primary btn-sm pull-right">
+                <i class="fa fa-plus"></i> Yeni Makale
+            </a>
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Başlık</th>
+                        <th>Oluşturulma</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr title="@item.Content" data-toggle="tooltip">
+                            <td>@item.Category.Name</td>
+                            <td>@item.Title</td>
+                            <td>@item.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>
+                                @if (item.IsDeleted)
+                                {
+                                    <a href="@Url.Action("DeleteArticle","Admin",new { id=item.Id,unDelete=true})" class="btn btn-info btn-sm">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("AddOrUpdateArticle","Admin",new { id=item.Id})" class="btn btn-warning btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+
+                                    <a href="@Url.Action("DeleteArticle","Admin",new { id=item.Id})" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

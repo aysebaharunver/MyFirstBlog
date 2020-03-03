@@ -1,0 +1,36 @@
+﻿@model List<MyFirstBlog.Models.Entities.Comment>
+@{
+    ViewBag.Title = "CommentList";
+}
+
+<h2>Onaylanmamış Yorumlar</h2>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Eposta</th>
+            <th>Yorum</th>
+            <th>Onayla</th>
+            <th>Reddet</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Email</td>
+                <td>@item.Content</td>
+                <td>
+                    <a href="@Url.Action("ApproveComment","Admin",new { id=item.Id})" class="text-success btn-sm">
+                        <i class="fa fa-check"></i>
+                    </a>                   
+                </td>
+                <td>
+                    <a href="@Url.Action("DeleteComment","Admin",new { id=item.Id})" class="text-danger btn-sm">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

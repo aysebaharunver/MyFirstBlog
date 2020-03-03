@@ -1,0 +1,55 @@
+﻿@model List<MyFirstBlog.Models.Entities.Category>
+@{
+    ViewBag.Title = "Categories";
+}
+
+<div class="row">
+
+    <h2>Kategoriler</h2>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <a href="@Url.Action("AddOrUpdateCategory","Admin")" class="btn btn-primary btn-sm pull-right">
+                <i class="fa fa-plus"></i>  Ekle
+            </a>
+
+            <table class="table table-striped table-hover">
+
+                <thead>
+                    <tr>
+                        <th>Kategori Adı</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>
+                                @if (item.IsDeleted)
+                                {
+                                    <span>Bu kayıt silinmiş geri getrimek için <a href="#">buraya</a> tıklayın</span>
+
+                                }
+
+                                else
+                                {
+                                    <a href="@Url.Action("AddOrUpdateCategory","Admin",new {id=item.Id })"
+                                       class="btn btn-warning btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="@Url.Action("CategoryDelete","Admin",new {id=item.Id })"
+                                       class="btn btn-danger btn-sm">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

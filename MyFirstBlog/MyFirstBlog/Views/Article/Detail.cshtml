@@ -1,0 +1,63 @@
+﻿@model MyFirstBlog.Models.Entities.Article
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+<h4>@Model.Category.Name</h4>
+<h5>@Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")</h5>
+<p>
+    @Html.Raw(Model.Content)
+</p>
+
+@using (Html.BeginForm("AddComment","Article",FormMethod.Post))
+{
+    @*<input type="text" value="@Model.Id" name="articleid" hidden />*@
+
+    @Html.AntiForgeryToken()
+    @Html.Hidden("articleid",Model.Id)
+
+   <div class="panel panel-warning">
+       <div class="panel-body">
+           <div class="form-horizontal">
+               <div class="form-group">
+                   <label class="col-sm-3 control-label">E-Posta</label>
+                   <div class="col-sm-9">
+                       <input type="email" name="email" class="form-control" />
+                   </div>
+               </div>
+
+               <div class="form-group">
+                   <label class="col-sm-3 control-label">Yorumunuz</label>
+                   <div class="col-sm-9">
+                       <textarea class="form-control" name="content" placeholder="Yorumunuz temiz olsun"></textarea>
+                   </div>
+               </div>
+
+               <div class="form-group">
+                   <div class="col-sm-9 col-sm-offset-3">
+                       <input type="submit" value="Gönder" class="btn btn-primary btn-sm" />
+                   </div>
+               </div>
+
+           </div>
+       </div>
+   </div>
+}
+
+
+
+@foreach (var comment in Model.Comments.OrderByDescending(i=>i.CreatedDate))
+{
+    <div class="panel panel-primary panel-body">
+
+        <h4>@comment.Email <small>@comment.CreatedDate.ToShortDateString()</small> </h4>
+
+        <p>
+            @comment.Content
+        </p>
+
+    </div>
+}
+
